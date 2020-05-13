@@ -1,6 +1,6 @@
 from os.path import isfile, dirname, join
 from os import listdir
-from beautifulsoup4 import BeautifulSoup as BS
+from bs4 import BeautifulSoup as BS
 from importlib import import_module
 
 
