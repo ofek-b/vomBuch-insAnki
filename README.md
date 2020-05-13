@@ -1,10 +1,10 @@
 # vomBuchInAnki
-Creates German vocabulary Anki cards from notes made in Google Play Books. Great for advanced German learners.
+I wrote it to save me the effort of reading through the list of notes I made in Google Books, looking them up and manually typing every single note into Anki. Simply highlight something -> run vomBuchInAnki -> Anki note created.
 
 <img src="/example.png" alt="Example" width="70%" height="70%">
 
 ## Installation
-You need to have [Anki](https://apps.ankiweb.net/#download) installed: `$ sudo apt install anki` plus the add-on [AnkiConnect](https://ankiweb.net/shared/info/2055492159) (and your account connected of course).
+You need to have [Anki](https://apps.ankiweb.net/#download) installed<sup>1</sup>: `$ sudo apt install anki` plus the add-on [AnkiConnect](https://ankiweb.net/shared/info/2055492159) (and your account connected of course).
  
  1. Clone this repo.
  1. `$ bash installpreqs.sh` to install the prerequisites ([SFST](https://www.cis.uni-muenchen.de/~schmid/tools/SFST/) and [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)).
@@ -20,4 +20,7 @@ You need to have [Anki](https://apps.ankiweb.net/#download) installed: `$ sudo a
 1. Every lemma + POS pair found (one marking can lead to several pairs) is queried to [PONS](https://en.pons.com/p/online-dictionary/developers/api) using the API you provided in the profile and according to their terms.
 1. The best translation to be used as a card is picked from the entry, alongside with an example, to create an Anki note.
 1. Notes are created using AnkiConnect.
-1. Markings for which no translation/lemma was found (~5%) are written in the path specified in the profile.
+1. Markings for which no translation/lemma was found (~5%) are written in the path specified in the profile (so you can add them manually when you're bored).
+
+## Footnotes
+<sup>1</sup> For some reason, installing Anki this way rather than from the tar archive in their website saves problems when calling `anki` from python (It's a different version, as this one lacks dark mode).
