@@ -4,15 +4,15 @@ Creates German vocabulary Anki cards from notes made in Google Play Books. Great
 <img src="/example.png" alt="Example" width="70%" height="70%">
 
 ## Installation
-You need to have [Anki](https://apps.ankiweb.net/#download) installed: `sudo apt install anki` plus the add-on [AnkiConnect](https://ankiweb.net/shared/info/2055492159) (and your account connected of course).
+You need to have [Anki](https://apps.ankiweb.net/#download) installed: `$ sudo apt install anki` plus the add-on [AnkiConnect](https://ankiweb.net/shared/info/2055492159) (and your account connected of course).
  
  1. Clone this repo.
- 1. `bash installpreqs.sh` to install the prerequisites ([SFST](https://www.cis.uni-muenchen.de/~schmid/tools/SFST/) and [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)).
+ 1. `$ bash installpreqs.sh` to install the prerequisites ([SFST](https://www.cis.uni-muenchen.de/~schmid/tools/SFST/) and [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)).
  1. Set your profile in the profiles folder.
  
  ## Usage
  1. Markings provided should either be a single word, an idiom or a phrase beginning and ending with the parts of a separable verb (e.g. _ging oft damit ein_).
- 1. `python main.py`
+ 1. `$ python main.py`
  1. Specify a profile if several exist.
 
 ## What it does
