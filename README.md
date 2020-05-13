@@ -14,7 +14,7 @@ You need to have [Anki](https://apps.ankiweb.net/#download) installed<sup>2</sup
  
  ## Usage
  1. Markings provided should either be a single word, an idiom or a phrase beginning and ending with the parts of a separable verb (e.g. _ging oft damit ein_).
- 1. `$ python main.py`
+ 1. `$ python main.py` (should not take more than a few minutes)
  1. Specify a profile if several exist.
 
 ## What it does
