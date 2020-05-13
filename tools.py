@@ -1,19 +1,25 @@
-from os.path import isfile
+from os.path import isfile, dirname, join
+from os import listdir
 from bs4 import BeautifulSoup as BS
 from importlib import import_module
 
-profile = input('Profile: ')
-params = import_module('profiles.' + profile)
 
-ANKI_USER = params.ANKI_USER
-DECK_NAME = params.DECK_NAME
-NOTE_TYPE = params.NOTE_TYPE
-NOT_FOUND_PATH = params.NOT_FOUND_PATH
-PONS_KEY = params.PONS_KEY
-getmarkings = params.getmarkings
+profiles = [x.rstrip('.py') for x in listdir(join(dirname(__file__), 'profiles')) if x.endswith('.py')]
+if not profiles:
+    raise Exception('No profile found.')
+elif len(profiles) == 1:
+    profile = profiles[0]
+else:
+    profile = input('Profile: ')
 
+profmodule = import_module('profiles.' + profile)
+ANKI_USER = profmodule.ANKI_USER
+DECK_NAME = profmodule.DECK_NAME
+NOT_FOUND_PATH = profmodule.NOT_FOUND_PATH
+PONS_KEY = profmodule.PONS_KEY
+getmarkings = profmodule.getmarkings
 
-DONE_PATH = '.donemarkings_' + ANKI_USER + '.txt'
+DONE_PATH = 'donemarkings_' + ANKI_USER + '.txt'
 
 
 def dispreport(marking, entry, show):

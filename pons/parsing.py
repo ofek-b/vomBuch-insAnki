@@ -16,8 +16,6 @@ def parserom(rom):  # rom has: headword, info, sense, wordclass, arabs
         sense += soup.find_all('span', {'class': cl})
     rom['sense'] = sense
 
-    # rom['flexions'] = ''.join([str(f) for f in soup.find_all('span', {'class': 'flexion'})])
-
     if 'wordclass' not in rom:
         rom['wordclass'] = None
     if 'arabs' not in rom:
@@ -46,8 +44,6 @@ def parsearab(arab):  # arab has: headword, info, sense, translations
         sense += soup.find_all('span', {'class': cl})
     arab['sense'] = sense
 
-    # arab['flexions'] = ''.join([str(f) for f in soup.find_all('span', {'class': 'flexion'})])
-
     if 'translations' not in arab:
         arab['translations'] = []
     return arab
@@ -61,4 +57,3 @@ def parsetrans(trans):  # trans has: source, source_text, target, transtype
             trans['transtype'] = transtype
     trans['source_text'] = soup.text
     return trans
-

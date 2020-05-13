@@ -1,7 +1,6 @@
 import requests
 import urllib
 import json
-from os.path import isfile, join, dirname
 import os
 
 from tools import *
@@ -61,4 +60,3 @@ def getroms(data):
             print('error, check that ref=false')
 
     return allroms, lonely_translations
-

@@ -62,7 +62,7 @@ def query(terms):
     with ZipFile(io.BytesIO(r.content)) as archive:
         cafilepath = archive.extract(archive.namelist()[0], path=dirname(__file__))
 
-    wordlistfilename = join(dirname(__file__), '.tmp_zmorgewordlist.txt')
+    wordlistfilename = join(dirname(__file__), 'tmp_zmorgewordlist.txt')
     with open(wordlistfilename, mode='w', encoding='utf8') as f:
         for term in terms:
             f.write(term + '\n')
@@ -116,7 +116,3 @@ def row2lemma(row):
     lemma = ''.join(filter(lambda x: x.isalpha() or x in ['-', ' ', ','], lemma))
 
     return lemma, pos
-
-
-if __name__ == '__main__':
-    query(['ging'])

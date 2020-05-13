@@ -97,4 +97,3 @@ def cardsfrompons(maindict):
             ankinote = createnote(rom, arab, trans, egtrans)
             if ankinote['DE']:
                 maindict[marking]['ankinotes'].append(ankinote)
-
