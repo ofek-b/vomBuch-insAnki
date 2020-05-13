@@ -11,7 +11,7 @@ You need to have [Anki](https://apps.ankiweb.net/#download) installed<sup>1</sup
  1. Set your profile in the profiles folder.
  
  ## Usage
- 1. Markings provided should either be a single word, an idiom or a phrase beginning and ending with the parts of a separable verb (e.g. _ging oft damit ein_).
+ 1. Markings provided should either be a single word, an idiom or a phrase beginning and ending with the parts of a separable verb (e.g. <mark>ging oft damit ein</mark>).
  1. `$ python main.py`
  1. Specify a profile if several exist.
 
