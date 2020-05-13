@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup as BS
+from beautifulsoup4 import BeautifulSoup as BS
 
 
 def parserom(rom):  # rom has: headword, info, sense, wordclass, arabs
