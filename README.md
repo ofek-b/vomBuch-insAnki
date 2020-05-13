@@ -4,7 +4,7 @@ I wrote it to save me the effort of reading through the list of notes I made in 
 <img src="/example.png" alt="Example" width="70%" height="70%">
 
 ## Installation
-Written for Linux, should run on Mac after a few modifications.<sup>1</sup>
+Written for Linux, should run on Mac after a few modifications<sup>1</sup>. You need python >= 3.8.
 
 You need to have [Anki](https://apps.ankiweb.net/#download) installed<sup>2</sup>: `$ sudo apt install anki` plus the add-on [AnkiConnect](https://ankiweb.net/shared/info/2055492159) (and your account connected of course).
  
@@ -25,6 +25,6 @@ You need to have [Anki](https://apps.ankiweb.net/#download) installed<sup>2</sup
 1. Markings for which no translation/lemma was found (~5%) are written in the path specified in the profile (so you can add them manually when you're bored).
 
 ## Notes
-<sup>1</sup> SFST does not exist for Windows, from what I've checked. ~~This code was only tested on Ubuntu 18.04/20.04 with python 3.8~~.
+<sup>1</sup> SFST does not exist for Windows, from what I've checked. This code was only tested on Ubuntu 20.04.
 
 <sup>2</sup> For some reason, installing Anki this way rather than from the tar archive in their website saves problems when calling `anki` from python (It's a different version, as this one lacks dark mode).
