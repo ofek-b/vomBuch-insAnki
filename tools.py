@@ -19,7 +19,7 @@ NOT_FOUND_PATH = profmodule.NOT_FOUND_PATH
 PONS_KEY = profmodule.PONS_KEY
 getmarkings = profmodule.getmarkings
 
-DONE_PATH = 'donemarkings_' + ANKI_USER + '.txt'
+DONE_PATH = 'donemarkings_' + profile + '.txt'
 
 
 def dispreport(marking, entry, show):
