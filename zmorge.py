@@ -27,7 +27,7 @@ def lemmatize(markings):
         cleanmarking = basiccleanup(marking)
         if not cleanmarking: continue
         maindict[marking] = {'clean': cleanmarking, 'terms': [], 'lemmaposes': []}
-        if len(marking.split()) == 1:  # case of single word
+        if len(maindict[marking]['clean'].split()) == 1:  # case of single word
             maindict[marking]['terms'] = [maindict[marking]['clean']]
         else:  # case of a phrase: look for trennbares Verb
             one, two = maindict[marking]['clean'].split()[0].lower(), maindict[marking]['clean'].split()[-1].lower()
