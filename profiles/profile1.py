@@ -14,11 +14,11 @@ NOT_FOUND_PATH = "~/Documents/vomBuchInAnki Notes Unfound - Deck 1.txt"
 PONS_KEY = "abc123..."
 
 
+import requests
 # A function returning a list of the markings you wish to input to vomBuchInAnki, usually fetched from some cloud.
 # The example here fetches the Google Play Books note list from Google Drive (see GPB's settings).
 # To use just change the fileid below. If you wish to use a different cloud/list format, you should rewrite it.
 def getmarkings():
-    import requests
     # File-ID of your auto-generated "Notizen aus..." Google Drive file. Must be "anyone with the link can view".
     fileid = 'xyz123...'
     baseurl = 'https://docs.google.com/document/export?format=txt&id=' + '%s' + '&includes_info_params=true'
