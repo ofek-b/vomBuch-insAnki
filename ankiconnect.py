@@ -3,7 +3,7 @@ import urllib.request
 import subprocess
 from time import sleep
 
-from tools import *
+from constants import ANKI_USER, DECK_NAME
 
 NOTE_TYPE = 'vomBuchInAnki Note'
 ANKI_APP = None

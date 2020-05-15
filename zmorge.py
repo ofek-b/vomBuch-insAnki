@@ -4,17 +4,12 @@ import re
 import requests
 from zipfile import ZipFile
 import io
-from os.path import dirname, join
+from os.path import join
 
-from tools import basiccleanup
-
+from constants import NOTCODE_DIR
 
 cafileurl = 'https://pub.cl.uzh.ch/users/sennrich/zmorge/transducers/zmorge-20150315-smor_newlemma.ca.zip'
-
-posdict = {'<+V>': 'Verb',
-           '<+NN>': 'Nomen',
-           '<+ADJ>': 'Adjektiv',
-           '<+ADV>': 'Adverb', '<+PROADV>': 'Adverb'}
+posdict = {'<+V>': 'Verb', '<+NN>': 'Nomen', '<+ADJ>': 'Adjektiv', '<+ADV>': 'Adverb', '<+PROADV>': 'Adverb'}
 
 
 def lemmatize(markings):
@@ -58,14 +53,14 @@ def simplerules(maindict):
 
 
 def query(terms):
-    r = requests.get(cafileurl)
-    with ZipFile(io.BytesIO(r.content)) as archive:
-        cafilepath = archive.extract(archive.namelist()[0], path=dirname(__file__))
-
-    wordlistfilename = join(dirname(__file__), 'tmp_zmorgewordlist.txt')
+    wordlistfilename = join(NOTCODE_DIR, 'tmp_zmorgewordlist.txt')
     with open(wordlistfilename, mode='w', encoding='utf8') as f:
         for term in terms:
             f.write(term + '\n')
+
+    r = requests.get(cafileurl)
+    with ZipFile(io.BytesIO(r.content)) as archive:
+        cafilepath = archive.extract(archive.namelist()[0], path=NOTCODE_DIR)
 
     prc = run(['fst-infl2', cafilepath, wordlistfilename], capture_output=True)
     remove(wordlistfilename)
@@ -116,3 +111,23 @@ def row2lemma(row):
     lemma = ''.join(filter(lambda x: x.isalpha() or x in ['-', ' ', ','], lemma))
 
     return lemma, pos
+
+
+def basiccleanup(st):
+    # remove non-text characters:
+    original_st = st
+    st = ''
+    for c in original_st:
+        if c.isalpha() or c == '-':
+            st = st + c
+        if c.isspace():
+            st = st + ' '
+    # remove non-letters/lonely letters from edges:
+    while not st[0:2].isalpha():
+        st = st[1::]
+    while not st[-2::].isalpha():
+        st = st[:-1:]
+    # make space series to single space
+    while ' ' + ' ' in st:
+        st = st.replace(' ' + ' ', ' ')
+    return st
