@@ -14,7 +14,7 @@ You need to have [Anki](https://apps.ankiweb.net/#download) installed on your co
  1. Set your profile in the profiles folder.
  
  #### Usage
- Just `$ python main.py` and specify a profile if several exist.
+ Just `$ python3.8 main.py` and specify a profile if several exist.
  
  It should not take more than a few minutes (the time is mostly spent downloading Zmorge's lexicon).
  
