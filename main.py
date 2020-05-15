@@ -42,9 +42,9 @@ def dispreport(marking, entry, show):
 
     else:
         for n in entry['ankinotes']:
-            de = BS(n['DE'], features="lxml").text
+            de = BS(n['DE'], features="html.parser").text
             de = de.replace('\n', '').strip()
-            en = BS(n['EN'], features="lxml").text
+            en = BS(n['EN'], features="html.parser").text
             en = en.replace('\n', '').strip()
             if show == 'added' and n['couldadd']:
                 print(marking, '==>', de, ':', en)
