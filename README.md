@@ -1,7 +1,7 @@
 # vomBuchInAnki
 I wrote it to save me the effort of reading through the list of notes I made in Google Books, looking them up and manually typing every single note into Anki. Simply highlight something -> run vomBuchInAnki -> Anki note created.
 
-<img src="/example.png" alt="Example" width="70%" height="70%">
+<img src="/notcode/example.png" alt="Example" width="70%" height="70%">
 
 ## Installation
 Written for Linux, should run on Mac after a few modifications<sup>1</sup>. You need python >= 3.8.
