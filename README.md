@@ -1,5 +1,5 @@
 # vomBuchInAnki
-I wrote it to save me the effort of reading through the list of notes I made in Google Books, looking them up and manually typing every single note into Anki. Simply highlight something -> run vomBuchInAnki -> Anki note created.
+I wrote it to spare me the effort of reading through the list of notes I made in Google Books, looking them up and manually typing every single note into Anki. Simply highlight something -> run vomBuchInAnki -> Anki note created.
 
 <img src="/notcode/example.png" alt="Example" width="70%" height="70%">
 
