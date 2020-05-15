@@ -6,7 +6,7 @@ I wrote it to spare me the effort of reading through the list of notes I made in
 #### Installation
 Written for Linux, should run on Mac after a few minor modifications<sup>1</sup>. You need python >= 3.8.
 
-You need to have [Anki](https://apps.ankiweb.net/#download) installed on your computer<sup>2</sup> `$ sudo apt install anki`, with your account connected.
+You need to have [Anki](https://apps.ankiweb.net/#download) installed on your computer<sup>2</sup>: `$ sudo apt install anki`. Your account needs to be connected of course.
  
  1. In Anki, install the add-on [AnkiConnect](https://ankiweb.net/shared/info/2055492159).
  1. Clone this repo.
