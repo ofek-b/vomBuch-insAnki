@@ -28,6 +28,22 @@ def markings2cards():
     writetolog(maindict)  # Print results and write them to log
 
 
+def writetolog(maindict):
+    with open(DONE_PATH, mode='a', encoding='utf8') as donefile:
+        for marking in maindict:
+            donefile.write(marking + '\n')  # add all markings to log
+            dispreport(marking, maindict[marking], 'added')  # display added notes
+
+    with open(NOT_FOUND_PATH, mode='a', encoding='utf8') as notfoundfile:
+        for marking in maindict:
+            if not maindict[marking]['ankinotes']:
+                msg = dispreport(marking, maindict[marking], 'notfound')  # dsiplay not found markings
+                notfoundfile.write(msg + '\n')  # add not found markings to notfound log
+
+    for marking in maindict:
+        dispreport(marking, maindict[marking], 'couldntadd')  # display couldntadd markings
+
+
 def dispreport(marking, entry, show):
     msg = None
     if show == 'notfound' and not entry['ankinotes']:
@@ -54,27 +70,10 @@ def dispreport(marking, entry, show):
     return msg
 
 
-def writetolog(maindict):
-    with open(DONE_PATH, mode='a', encoding='utf8') as donefile:
-        for marking in maindict:
-            donefile.write(marking + '\n')  # add all markings to log
-            dispreport(marking, maindict[marking], 'added')  # display added notes
-
-    with open(NOT_FOUND_PATH, mode='a', encoding='utf8') as notfoundfile:
-        for marking in maindict:
-            if not maindict[marking]['ankinotes']:
-                msg = dispreport(marking, maindict[marking], 'notfound')  # dsiplay not found markings
-                notfoundfile.write(msg + '\n')  # add not found markings to notfound log
-
-    for marking in maindict:
-        dispreport(marking, maindict[marking], 'couldntadd')  # display couldntadd markings
-
-
 def readlog():
-    if isfile(DONE_PATH):
-        with open(DONE_PATH, mode='r', encoding='utf8') as logfile:
-            return [row.rstrip('\n') for row in logfile if row.rstrip('\n')]
-    return []
+    if not isfile(DONE_PATH): return []
+    with open(DONE_PATH, mode='r', encoding='utf8') as logfile:
+        return [row.rstrip('\n') for row in logfile if row.rstrip('\n')]
 
 
 if __name__ == "__main__":

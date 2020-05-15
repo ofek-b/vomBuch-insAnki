@@ -54,75 +54,57 @@ def query(terms):
 
 
 def makenote(data, term, pos):
-    if not data: return {'DE': ''}
+    if not data:
+        return {'DE': ''}
 
-    # extract the roms and lonely translations out of the raw json received:
-    roms = []
-    lonely_translations = []
+    # parse every translation from the json response into a dictionary containing all relevant infos:
+    notenominees = []
+    notenominees_lonetrans = []
     for hit in data[0]['hits']:
         if hit['type'] == 'entry':
-            roms.extend(hit['roms'])
+            for rom in hit['roms']:
+                for arab in rom['arabs']:
+                    for trans in arab['translations']:
+                        notenominees.append(parse(rom, arab, trans, term, pos))
         elif hit['type'] == 'translation':
-            lonely_translations.append({'source': hit['source'], 'target': hit['target']})
+            notenominees_lonetrans.append(parse(None, None, hit, term, pos))
         else:
             raise Exception('error, check that ref=false')
-
-    # parse every translation into a dictionary containing all relevant infos:
-    notenominees = []
-    for rom in roms:
-        for arab in rom['arabs']:
-            for trans in arab['translations']:
-                notenominees.append(parse(rom, arab, trans, term, pos))
-
-    if not roms and len(term.split()) > 1:  # idiom
-        for trans in lonely_translations:
-            notenominees.append(parse(None, None, trans, term, pos))
+    notenominees = notenominees + notenominees_lonetrans
 
     # pick the right nominee and make the ankinote:
     egs = [nn for nn in notenominees if 'example' == nn['transtype'] or 'full_collocation' == nn['transtype']]
-    srtd = []
+    nns = []
     if pos == 'Verb':
-        srtd = [nn for nn in notenominees if 'grammatical_construction' == nn['transtype']]
-    srtd += [nn for nn in notenominees if nn not in srtd and nn not in egs]
-    srtd = [nn for nn in srtd if nn['fit']]
+        nns = [nn for nn in notenominees if 'grammatical_construction' == nn['transtype']]
+    nns += [nn for nn in notenominees if nn not in nns and nn not in egs]
 
+    nns = [nn for nn in nns if nn['fit']]
     examples = ''
-    if srtd:
-        nn = srtd[0]
+    if nns:
+        nn = nns[0]
         egs = [eg for eg in egs if nn['arab'] == eg['arab']] + [eg for eg in egs if nn['rom'] == eg['rom']]
         if egs and not nn['lonely']:
             examples = egs[0]['source'] + '<br>' + egs[0]['target']
     else:
-        nn = egs[0]
+        egs = [eg for eg in egs if eg['fit']]
+        if egs:
+            nn = egs[0]
+        else:
+            return {'DE': ''}
 
     return {'DE': nn['source'], 'DE Info': nn['info'], 'Sense': nn['sense'], 'EN': nn['target'], 'Examples': examples}
 
 
 def parse(rom, arab, trans, term, pos):
     lonely = rom is None
-    nn = {'headwords': [], 'wordclass': None, 'info': '', 'sense': '', 'source': '', 'source_text': '',
-          'target': '', 'transtype': '', 'ankinote': {}, 'fit': None, 'lonely': lonely, 'rom': rom, 'arab': arab}
+    nn = {'rom': rom, 'arab': arab, 'transtype': '', 'source': '', 'info': '', 'target': '', 'sense': '',
+          'fit': None, 'lonely': lonely}
 
     trans_soup = BS(trans['source'], features="html.parser")
     if not lonely:
         rom_soup = BS(rom['headword_full'], features="html.parser")
         arab_soup = BS(arab['header'], features="html.parser")
-
-    # headwords:
-    if not lonely:
-        nn['headwords'].append(''.join(filter(lambda x: x.isalpha() or x in ['-', ' ', ','], rom['headword'])))
-
-        arab_headword = ''
-        if arab_soup.find_all(text=True):
-            arab_headword = str(arab_soup.find_all(text=True)[0])
-        if len(arab_headword) >= 3 and arab_headword[0].isdigit() and arab_headword[1] == '.' \
-                and arab_headword[2].isspace():
-            arab_headword = arab_headword[3::]
-        nn['headwords'].append(arab_headword.strip())
-
-    # wordclass:
-    if not lonely:
-        nn['wordclass'] = rom['wordclass']
 
     # info:
     info = []
@@ -146,9 +128,6 @@ def parse(rom, arab, trans, term, pos):
     for s in trans_soup.find_all('span', {'class': 'sense'}):
         nn['source'] = nn['source'].replace(str(s), '')
 
-    # source_text:
-    nn['source_text'] = BS(nn['source'], features="html.parser").text
-
     # target:
     nn['target'] = trans['target']
 
@@ -158,12 +137,20 @@ def parse(rom, arab, trans, term, pos):
             nn['transtype'] = transtype
 
     # fit:
-    if not lonely:
-        posmatches = not pos or (nn['wordclass'] is not None and pos in nn['wordclass'])
-        lemmamatches = term and term in nn['headwords']
-        nn['fit'] = posmatches and lemmamatches
+    if lonely or len(term.split()) > 1:  # idiom
+        nn['fit'] = term in BS(nn['source'], features="html.parser").text
     else:
-        nn['fit'] = term in nn['source_text']
+        rom_headword = ''.join(filter(lambda x: x.isalpha() or x in ['-', ' ', ','], rom['headword']))
+
+        arab_headword = ''
+        if arab_soup.find_all(text=True):
+            arab_headword = str(arab_soup.find_all(text=True)[0])
+        if len(arab_headword) >= 3 and arab_headword[0].isdigit() and arab_headword[1] == '.' \
+                and arab_headword[2].isspace():
+            arab_headword = arab_headword[3::]
+        arab_headword = arab_headword.strip()
+
+        nn['fit'] = 'wordclass' in rom and pos in rom['wordclass'] and term in [rom_headword, arab_headword]
 
     return nn
 

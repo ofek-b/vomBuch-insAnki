@@ -1,8 +1,10 @@
-from os.path import join
-from os import listdir
+from os.path import join, isdir
+from os import listdir, mkdir
 from importlib import import_module
 
 NOTCODE_DIR = 'notcode'
+if not isdir(NOTCODE_DIR):
+    mkdir(NOTCODE_DIR)
 
 # read profile:
 profiles = [x.rstrip('.py') for x in listdir('profiles') if x.endswith('.py')]
