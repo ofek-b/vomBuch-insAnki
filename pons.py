@@ -103,10 +103,10 @@ def parse(rom, arab, trans, term, pos):
     nn = {'headwords': [], 'wordclass': None, 'info': '', 'sense': '', 'source': '', 'source_text': '',
           'target': '', 'transtype': '', 'ankinote': {}, 'fit': None, 'lonely': lonely, 'rom': rom, 'arab': arab}
 
-    trans_soup = BS(trans['source'], features="lxml")
+    trans_soup = BS(trans['source'], features="html.parser")
     if not lonely:
-        rom_soup = BS(rom['headword_full'], features="lxml")
-        arab_soup = BS(arab['header'], features="lxml")
+        rom_soup = BS(rom['headword_full'], features="html.parser")
+        arab_soup = BS(arab['header'], features="html.parser")
 
     # headwords:
     if not lonely:
@@ -147,7 +147,7 @@ def parse(rom, arab, trans, term, pos):
         nn['source'] = nn['source'].replace(str(s), '')
 
     # source_text:
-    nn['source_text'] = BS(nn['source'], features="lxml").text
+    nn['source_text'] = BS(nn['source'], features="html.parser").text
 
     # target:
     nn['target'] = trans['target']
