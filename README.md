@@ -9,7 +9,7 @@ Written for Linux, should run on Mac after a few modifications<sup>1</sup>. You 
 You need to have [Anki](https://apps.ankiweb.net/#download) installed<sup>2</sup>: `$ sudo apt install anki` plus the add-on [AnkiConnect](https://ankiweb.net/shared/info/2055492159) (and your account connected of course).
  
  1. Clone this repo.
- 1. `$ bash installpreqs.sh` to install the prerequisites ([SFST](https://www.cis.uni-muenchen.de/~schmid/tools/SFST/) and [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)).
+ 1. `$ bash notcode/installpreqs.sh` to install the prerequisites ([SFST](https://www.cis.uni-muenchen.de/~schmid/tools/SFST/) and [Beautiful Soup](https://www.crummy.com/software/BeautifulSoup/)).
  1. Set your profile in the profiles folder.
  
  ## Usage
