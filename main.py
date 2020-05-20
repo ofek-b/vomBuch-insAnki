@@ -10,8 +10,8 @@ from ankiconnect import addnotes
 def markings2cards():
     print('Fetching markings...')
     markings = getmarkings()
-    current_notes = readlog()
-    markings = [marking for marking in markings if marking not in current_notes]
+    donemarkings = readlog()
+    markings = [marking for marking in markings if marking not in donemarkings]
     if not markings:
         print('All markings fetched have already been processed.')
         return
