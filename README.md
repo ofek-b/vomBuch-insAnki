@@ -22,7 +22,7 @@ You need to have [Anki](https://apps.ankiweb.net/#download) installed on your co
 
 #### What it does
 1. Markings are cleaned, phrases are treated as trennbare Verben or idioms, and then [Zmorge](https://pub.cl.uzh.ch/users/sennrich/zmorge/) is used for lemmatization and part-of-speech determination.
-1. Every lemma + POS pair found (one marking can lead to several pairs) is queried to [PONS](https://en.pons.com/p/online-dictionary/developers/api) using the API you provided in the profile and according to their terms.
+1. Every lemma + POS pair found (one marking can lead to several pairs) is queried to [PONS](https://en.pons.com/p/online-dictionary/developers/api) using the API-key you provided in the profile and according to their terms.
 1. The best translation to be used as an Anki note is picked from the results, alongside with an example if available. This happenns for every lemma + POS pair, so a single marking can lead to several Anki notes.
 1. Notes are uploaded to your Anki user using AnkiConnect.
 1. Markings for which no translation/lemma was found (~5%) are written in the path specified in the profile (so you can add them manually when you're bored). All markings taken care of in the run are logged so as to not process the same marking twice.
