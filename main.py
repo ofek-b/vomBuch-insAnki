@@ -15,7 +15,7 @@ def markings2cards():
     if not markings:
         print('All markings fetched have already been processed.')
         return
-
+    
     print('Looking up lemmata in ZMORGE...')
     maindict = lemmatize(markings)  # maindict[marking] has: clean, terms, lemmaposes
     print('Querying translations from PONS...')

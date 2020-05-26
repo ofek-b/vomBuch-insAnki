@@ -41,6 +41,8 @@ def query(terms):
         url = BASE_URL + 'q=' + term_es + '&l=deen' + '&in=de' + '&ref=false&language=de'
         headers = {'X-Secret': PONS_KEY}
         r = requests.get(url, headers=headers)
+        if r.status_code not in [200, 204]:
+            raise Exception('Request to PONS returened error code ' + str(r.status_code))
         history[term] = []
         if r.text:
             history[term] = r.json()
@@ -80,12 +82,11 @@ def makenote(data, term, pos):
     nns += [nn for nn in notenominees if nn not in nns and nn not in egs]
 
     nns = [nn for nn in nns if nn['fit']]
-    examples = ''
     if nns:
         nn = nns[0]
         egs = [eg for eg in egs if nn['arab'] == eg['arab']] + [eg for eg in egs if nn['rom'] == eg['rom']]
         if egs and not nn['lonely']:
-            examples = egs[0]['source'] + '<br>' + egs[0]['target']
+            nn['ankinote']['Examples'] = egs[0]['ankinote']['DE'] + '<br>' + egs[0]['ankinote']['EN']
     else:
         egs = [eg for eg in egs if eg['fit']]
         if egs:
@@ -93,52 +94,50 @@ def makenote(data, term, pos):
         else:
             return {'DE': ''}
 
-    return {'DE': nn['source'], 'DE Info': nn['info'], 'Sense': nn['sense'], 'EN': nn['target'], 'Examples': examples}
+    return nn['ankinote']
 
 
 def parse(rom, arab, trans, term, pos):
     lonely = rom is None
-    nn = {'rom': rom, 'arab': arab, 'transtype': '', 'source': '', 'info': '', 'target': '', 'sense': '',
-          'fit': None, 'lonely': lonely}
+    nn = {'rom': rom, 'arab': arab, 'transtype': '', 'fit': None, 'lonely': lonely, 'ankinote': None}
 
     trans_soup = BS(trans['source'], features="html.parser")
     if not lonely:
         rom_soup = BS(rom['headword_full'], features="html.parser")
         arab_soup = BS(arab['header'], features="html.parser")
 
-    # info:
-    info = []
-    if not lonely:
-        for cl in ['genus', 'info' 'topic', 'rhetoric', 'style']:
-            info += rom_soup.find_all('span', {'class': cl})
-            info += arab_soup.find_all('span', {'class': cl})
-        nn['info'] = ', '.join([str(x) for x in removedups(info)])
-        if nn['info']:
-            nn['info'] = '&nbsp;&nbsp;&nbsp;' + nn['info']
-
-    # sense:
-    sense = trans_soup.find_all('span', {'class': 'sense'})
-    if not lonely:
-        sense += rom_soup.find_all('span', {'class': 'sense'})
-        sense += arab_soup.find_all('span', {'class': 'sense'})
-    nn['sense'] = ', '.join([str(x) for x in removedups(sense)])
-
-    # source:
-    nn['source'] = trans['source']
-    for s in trans_soup.find_all('span', {'class': 'sense'}):
-        nn['source'] = nn['source'].replace(str(s), '')
-
-    # target:
-    nn['target'] = trans['target']
-
     # transtype:
     for transtype in ['example', 'full_collocation', 'grammatical_construction']:
         if trans_soup.find_all('span', {'class': transtype}):
             nn['transtype'] = transtype
 
+    # ankinote:
+    info = []
+    if not lonely:
+        for cl in ['genus', 'info' 'topic', 'rhetoric', 'style']:
+            info += rom_soup.find_all('span', {'class': cl})
+            info += arab_soup.find_all('span', {'class': cl})
+        info = ', '.join([str(x) for x in removedups(info)])
+        if info:
+            info = '&nbsp;&nbsp;&nbsp;' + info
+
+    sense = trans_soup.find_all('span', {'class': 'sense'})
+    if not lonely:
+        sense += rom_soup.find_all('span', {'class': 'sense'})
+        sense += arab_soup.find_all('span', {'class': 'sense'})
+    sense = ', '.join([str(x) for x in removedups(sense)])
+
+    source = trans['source']
+    for s in trans_soup.find_all('span', {'class': 'sense'}):
+        source = source.replace(str(s), '')
+
+    target = trans['target']
+
+    nn['ankinote'] = {'DE': source, 'DE Info': info, 'Sense': sense, 'EN': target, 'Examples': ''}
+
     # fit:
     if lonely or len(term.split()) > 1:  # idiom
-        nn['fit'] = term in BS(nn['source'], features="html.parser").text
+        nn['fit'] = term in BS(source, features="html.parser").text
     else:
         rom_headword = ''.join(filter(lambda x: x.isalpha() or x in ['-', ' ', ','], rom['headword']))
 

@@ -58,13 +58,14 @@ def query(terms):
         for term in terms:
             f.write(term + '\n')
 
-    r = requests.get(cafileurl)
-    with ZipFile(io.BytesIO(r.content)) as archive:
-        cafilepath = archive.extract(archive.namelist()[0], path=NOTCODE_DIR)
-
+    # r = requests.get(cafileurl)
+    # with ZipFile(io.BytesIO(r.content)) as archive:
+    #     cafilepath = archive.extract(archive.namelist()[0], path=NOTCODE_DIR)
+    cafilepath = join(NOTCODE_DIR, 'zmorge-20150315-smor_newlemma.ca')
+    
     prc = run(['fst-infl2', cafilepath, wordlistfilename], capture_output=True)
     remove(wordlistfilename)
-    remove(cafilepath)
+    # remove(cafilepath)
     outrows = prc.stdout.decode('utf-8').split('\n')
     # for row in outrows:
     #     print(row)

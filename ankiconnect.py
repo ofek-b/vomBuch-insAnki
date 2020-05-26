@@ -34,7 +34,7 @@ def createnotetype():  # Creates the note type of the generated notes
     p = {'modelName': NOTE_TYPE, 'inOrderFields': ['DE', 'DE Info', 'Sense', 'EN', 'Examples', 'Marking']}
     p['css'] = '.card{\nfont-family:arial;\nfont-size:20px;\ntext-align:center;\ncolor:black;\nbackground-color:white;}'
     p['css'] += '\n\n.case{\nvertical-align:super;\nfont-style:italic;\nfont-size:80%;}\n\n'
-    for cl in ['topic', 'genus', 'info', 'style', 'rhetoric', 'region']:
+    for cl in ['topic', 'genus', 'info', 'style', 'rhetoric', 'region', 'collocator']:
         p['css'] += '\n.' + cl + '{font-style: italic;}'
 
     p['cardTemplates'] = [{}, {}]
