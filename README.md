@@ -16,9 +16,9 @@ You need to have [Anki](https://apps.ankiweb.net/#download) installed on your co
  #### Usage
  Just `$ python3.8 main.py` and specify a profile if several exist.
  
- It should not take more than a few minutes (the time is mostly spent downloading Zmorge's lexicon).
+ It should not take more than a few minutes.
  
- Markings provided should either be a single word, an idiom or a phrase beginning and ending with the parts of a separable verb (e.g. _ging oft damit ein_).
+ Markings provided should either be a single word, an idiom or a phrase beginning and ending with the parts of a separable verb (e.g. _ging oft damit einher_).
 
 #### What it does
 1. Markings are cleaned, phrases are treated as trennbare Verben or idioms, and then [Zmorge](https://pub.cl.uzh.ch/users/sennrich/zmorge/) is used for lemmatization and part-of-speech determination.
