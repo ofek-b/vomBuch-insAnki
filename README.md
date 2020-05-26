@@ -16,7 +16,7 @@ You need to have [Anki](https://apps.ankiweb.net/#download) installed on your co
  #### Usage
  Just `$ python3.8 main.py` and specify a profile if several exist.
  
- It should not take more than a few minutes.
+ It should not take more than a few minutes (initial run is a bit longer due to download of Zmorge's lexicon).
  
  Markings provided should either be a single word, an idiom or a phrase beginning and ending with the parts of a separable verb (e.g. _ging oft damit einher_).
 
