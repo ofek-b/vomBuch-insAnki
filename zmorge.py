@@ -4,7 +4,7 @@ import re
 import requests
 from zipfile import ZipFile
 import io
-from os.path import join
+from os.path import join, isfile
 
 from constants import NOTCODE_DIR
 
@@ -57,11 +57,12 @@ def query(terms):
     with open(wordlistfilename, mode='w', encoding='utf8') as f:
         for term in terms:
             f.write(term + '\n')
-
-    # r = requests.get(cafileurl)
-    # with ZipFile(io.BytesIO(r.content)) as archive:
-    #     cafilepath = archive.extract(archive.namelist()[0], path=NOTCODE_DIR)
+    
     cafilepath = join(NOTCODE_DIR, 'zmorge-20150315-smor_newlemma.ca')
+    if not isfile(cafilepath):
+        r = requests.get(cafileurl)
+        with ZipFile(io.BytesIO(r.content)) as archive:
+            archive.extract(archive.namelist()[0], path=NOTCODE_DIR)
     
     prc = run(['fst-infl2', cafilepath, wordlistfilename], capture_output=True)
     remove(wordlistfilename)
