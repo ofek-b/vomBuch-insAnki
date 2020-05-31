@@ -21,7 +21,7 @@ profmodule = import_module('profiles.' + profile)
 ANKI_USER = profmodule.ANKI_USER
 DECK_NAME = profmodule.DECK_NAME
 NOT_FOUND_PATH = profmodule.NOT_FOUND_PATH
-PONS_KEY = profmodule.PONS_KEY
+PONS_KEYS = profmodule.PONS_KEYS
 getmarkings = profmodule.getmarkings
 
 DONE_PATH = join(NOTCODE_DIR, 'donemarkings_' + profile + '.txt')
