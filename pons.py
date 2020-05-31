@@ -5,7 +5,7 @@ import os
 from os.path import isfile, join
 from bs4 import BeautifulSoup as BS
 
-from constants import PONS_KEY, NOTCODE_DIR
+from constants import PONS_KEYS, NOTCODE_DIR
 
 BASE_URL = 'https://api.pons.com/v1/dictionary?'
 HISTORY_PATH = join(NOTCODE_DIR, 'pons_responses_history.json')
@@ -36,13 +36,21 @@ def query(terms):
             history = json.load(jsonfile)
 
     newterms = [term for term in terms if term not in history]
+    keyidx = 0
     for term in newterms:
         term_es = urllib.parse.quote_plus(term)
         url = BASE_URL + 'q=' + term_es + '&l=deen' + '&in=de' + '&ref=false&language=de'
-        headers = {'X-Secret': PONS_KEY}
-        r = requests.get(url, headers=headers)
+
+        # send request trying all apikeys
+        r = requests.get(url, headers={'X-Secret': PONS_KEYS[keyidx]})
         if r.status_code not in [200, 204]:
-            raise Exception('Request to PONS returened error code ' + str(r.status_code))
+            keyidx = -1
+            while r.status_code not in [200, 204]:
+                keyidx += 1
+                if keyidx == len(PONS_KEYS):
+                    raise Exception('Request to PONS returened error, check in site if reached limit.')
+                r = requests.get(url, headers={'X-Secret': PONS_KEYS[keyidx]})
+
         history[term] = []
         if r.text:
             history[term] = r.json()
