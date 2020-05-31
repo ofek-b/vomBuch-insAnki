@@ -12,9 +12,9 @@ ANKI_USER = "User 1"
 DECK_NAME = "Deck 1"
 # Path to a .txt file where unsuccessful searches are saved
 NOT_FOUND_PATH = "/home/USERNAME/Documents/vomBuchInAnki Notes Unfound - Deck 1.txt"
-# Your PONS API-key, to be obtained in a two-minute process, free of charge and according to terms at:
+# Your PONS API-key(s), to be obtained in a two-minute process, free of charge and according to terms at:
 # http://login.pons.com/login?return_to=https%3A%2F%2Fen.pons.com%2Fopen_dict%2Fpublic_api%3Flogged%3D1
-PONS_KEY = "abc123..."
+PONS_KEYS = ["abc123456...", "xyz123456..."]
 
 
 # A function returning a list of the markings you wish to input to vomBuchInAnki, usually fetched from some cloud.
