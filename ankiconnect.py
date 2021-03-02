@@ -5,7 +5,7 @@ from time import sleep
 
 from constants import ANKI_USER, DECK_NAME
 
-NOTE_TYPE = 'vomBuchInAnki Note'
+NOTE_TYPE = 'vomBuch-insAnki Note'
 ANKI_APP = None
 
 
