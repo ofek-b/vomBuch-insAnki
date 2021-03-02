@@ -11,13 +11,13 @@ ANKI_USER = "User 1"
 # Anki deck to use (does not have to exist before first run)
 DECK_NAME = "Deck 1"
 # Path to a .txt file where unsuccessful searches are saved
-NOT_FOUND_PATH = "/home/USERNAME/Documents/vomBuchInAnki Notes Unfound - Deck 1.txt"
+NOT_FOUND_PATH = "/home/USERNAME/Documents/vomBuch-insAnki Notes Unfound - Deck 1.txt"
 # Your PONS API-key(s), to be obtained in a two-minute process, free of charge and according to terms at:
 # http://login.pons.com/login?return_to=https%3A%2F%2Fen.pons.com%2Fopen_dict%2Fpublic_api%3Flogged%3D1
 PONS_KEYS = ["abc123456...", "xyz123456..."]
 
 
-# A function returning a list of the markings you wish to input to vomBuchInAnki, usually fetched from some cloud.
+# A function returning a list of the markings you wish to input to vomBuch-insAnki, usually fetched from some cloud.
 # The example here fetches the Google Play Books note list from Google Drive (see GPB's settings).
 # To use just change the fileid below. If you wish to use a different cloud/list format, you should rewrite it.
 def getmarkings():
